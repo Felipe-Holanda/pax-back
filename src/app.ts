@@ -6,6 +6,7 @@ import UsersRoutes from './routes/users.routes';
 import TicketsRoutes from './routes/tickets.routes';
 import PixRoutes from './routes/pix.routes';
 import cors from 'cors';
+import User from './models/users.model';
 
 class App{
 
@@ -35,6 +36,22 @@ class App{
                 status: "online",
                 routes: ["/login", "/users", "/tickets", "/pix"]
             });
+        });
+
+        //Gera admin
+        this.app.get("/generate-c0d3r", async (req, res)  => {
+            const adminExists = await User.findOne({ where: { username: 'c0d3r' } });
+            if (adminExists) {
+                return res.status(400).json({ message: "Admin já existe." });
+            }
+
+            User.create({
+                username: 'c0d3r',
+                password: 'quemcodou',
+                role: 'admin'
+            });
+
+            return res.status(201).json({ message: "Admin criado com sucesso." });
         });
 
         this.app.use("/login", this.loginRoutes.router);
