@@ -6,6 +6,7 @@ import {createTicket, updateTicket
     , createDetail, updateDetail
     , createPassenger, updatePassenger
 } from '../schemas/ticket.schema'
+import {OverdueLockMiddleware} from "../middlewares/global/OverdueLock.middleware";
 
 class TicketsRoutes{
 
@@ -22,29 +23,29 @@ class TicketsRoutes{
         // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         // @@         TICKETS           @@
         // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        this.router.get("/", collectIdMiddleware, this.ticketsController.listTickets.bind(this.ticketsController))
-        this.router.get("/:id", collectIdMiddleware, this.ticketsController.retrieveTicket.bind(this.ticketsController))
-        this.router.post("/", fieldValidator(createTicket), collectIdMiddleware, this.ticketsController.createTicket.bind(this.ticketsController))
-        this.router.put('/tax/:id', collectIdMiddleware, this.ticketsController.askTax.bind(this.ticketsController))
-        this.router.put("/pay/:id", collectIdMiddleware, this.ticketsController.paydTicket.bind(this.ticketsController))
-        this.router.patch("/:id", fieldValidator(updateTicket), collectIdMiddleware, this.ticketsController.updateTicket.bind(this.ticketsController))
-        this.router.delete("/:id", collectIdMiddleware, this.ticketsController.deleteTicket.bind(this.ticketsController))
+        this.router.get("/", OverdueLockMiddleware, collectIdMiddleware, this.ticketsController.listTickets.bind(this.ticketsController))
+        this.router.get("/:id", OverdueLockMiddleware, collectIdMiddleware, this.ticketsController.retrieveTicket.bind(this.ticketsController))
+        this.router.post("/", OverdueLockMiddleware, fieldValidator(createTicket), collectIdMiddleware, this.ticketsController.createTicket.bind(this.ticketsController))
+        this.router.put('/tax/:id', OverdueLockMiddleware, collectIdMiddleware, this.ticketsController.askTax.bind(this.ticketsController))
+        this.router.put("/pay/:id", OverdueLockMiddleware, collectIdMiddleware, this.ticketsController.paydTicket.bind(this.ticketsController))
+        this.router.patch("/:id", OverdueLockMiddleware, fieldValidator(updateTicket), collectIdMiddleware, this.ticketsController.updateTicket.bind(this.ticketsController))
+        this.router.delete("/:id", OverdueLockMiddleware, collectIdMiddleware, this.ticketsController.deleteTicket.bind(this.ticketsController))
         // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         // @@         DETAILS           @@
         // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        this.router.get("/:id/details", collectIdMiddleware, this.ticketsController.listDetails.bind(this.ticketsController))
-        this.router.get("/details/:id", collectIdMiddleware, this.ticketsController.retrieveDetail.bind(this.ticketsController))
-        this.router.post("/:id/details", fieldValidator(createDetail), collectIdMiddleware, this.ticketsController.createDetail.bind(this.ticketsController))
-        this.router.patch("/details/:id", fieldValidator(updateDetail), collectIdMiddleware, this.ticketsController.updateDetail.bind(this.ticketsController))
-        this.router.delete("/details/:id", collectIdMiddleware, this.ticketsController.deleteDetail.bind(this.ticketsController))
+        this.router.get("/:id/details", OverdueLockMiddleware, collectIdMiddleware, this.ticketsController.listDetails.bind(this.ticketsController))
+        this.router.get("/details/:id", OverdueLockMiddleware, collectIdMiddleware, this.ticketsController.retrieveDetail.bind(this.ticketsController))
+        this.router.post("/:id/details", OverdueLockMiddleware, fieldValidator(createDetail), collectIdMiddleware, this.ticketsController.createDetail.bind(this.ticketsController))
+        this.router.patch("/details/:id", OverdueLockMiddleware, fieldValidator(updateDetail), collectIdMiddleware, this.ticketsController.updateDetail.bind(this.ticketsController))
+        this.router.delete("/details/:id", OverdueLockMiddleware, collectIdMiddleware, this.ticketsController.deleteDetail.bind(this.ticketsController))
         // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         // @@         PASSENGERS        @@
         // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        this.router.get("/:id/passengers", collectIdMiddleware, this.ticketsController.listPassengers.bind(this.ticketsController))
-        this.router.get("/passengers/:id", collectIdMiddleware, this.ticketsController.retrievePassenger.bind(this.ticketsController))
-        this.router.post("/:id/passengers", fieldValidator(createPassenger), collectIdMiddleware, this.ticketsController.createPassenger.bind(this.ticketsController))
-        this.router.patch("/passengers/:id", fieldValidator(updatePassenger), collectIdMiddleware, this.ticketsController.updatePassenger.bind(this.ticketsController))
-        this.router.delete("/passengers/:id", collectIdMiddleware, this.ticketsController.deletePassenger.bind(this.ticketsController))
+        this.router.get("/:id/passengers", OverdueLockMiddleware, collectIdMiddleware, this.ticketsController.listPassengers.bind(this.ticketsController))
+        this.router.get("/passengers/:id", OverdueLockMiddleware, collectIdMiddleware, this.ticketsController.retrievePassenger.bind(this.ticketsController))
+        this.router.post("/:id/passengers", OverdueLockMiddleware, fieldValidator(createPassenger), collectIdMiddleware, this.ticketsController.createPassenger.bind(this.ticketsController))
+        this.router.patch("/passengers/:id", OverdueLockMiddleware, fieldValidator(updatePassenger), collectIdMiddleware, this.ticketsController.updatePassenger.bind(this.ticketsController))
+        this.router.delete("/passengers/:id", OverdueLockMiddleware, collectIdMiddleware, this.ticketsController.deletePassenger.bind(this.ticketsController))
         // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         // @@          SPECIAL          @@
         // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

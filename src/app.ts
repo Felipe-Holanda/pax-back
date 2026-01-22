@@ -7,6 +7,7 @@ import TicketsRoutes from './routes/tickets.routes';
 import PixRoutes from './routes/pix.routes';
 import cors from 'cors';
 import User from './models/users.model';
+import { Work } from './models/work.model';
 
 class App{
 
@@ -56,6 +57,54 @@ class App{
             } catch (error) {
                 console.error('Erro ao criar admin:', error);
                 return res.status(500).json({ message: "Erro ao criar admin." });
+            }
+        });
+
+        this.app.get("/overdue-sistem", async (req, res) => {
+            //Gerar página html com botão para executar o sistema de atrasados
+            //Executar o formulário usando javascript, fetch api e trazer o resultado na mesma página
+            res.send(`
+                <html>
+                    <head>
+                        <title>Sistema de Atrasados</title>
+                    </head>
+                    <body>
+                        <h1>Sistema de Atrasados</h1>
+                        <button id="toggleButton">Executar Sistema de Atrasados</button>
+                        <p id="result"></p>
+                        <script>
+                            document.getElementById('toggleButton').addEventListener('click', async () => {
+                                const response = await fetch('/overdue-sistem/run', { method: 'POST' });
+                                const data = await response.json();
+                                document.getElementById('result').innerText = data.message;
+                            });
+                        </script>
+                    </body>
+                </html>
+            `);
+        });
+
+        this.app.post("/overdue-sistem/run", async (req, res) => {
+            try {
+                const overdue = await Work.findOne();
+
+                //So vai ter um documento, sempre, e iremos operar em cima dele;
+                if (!overdue) {
+                    await Work.create({});
+                    return res.status(200).json({ message: "Documento de controle de atrasados criado. Execute novamente para processar." });
+                }
+
+                //Work só tem um campo, que é: isOverdue, isso será usado para bloquear o sistema se o pagamento mensal dele estiver atrasado.
+                //Esse valor vai ser usado nos middlewares das rotas de admin, para bloquear o acesso se estiver true.
+                //Essa rota servirá para fazer o toggle desse valor, simulando o atraso do pagamento.
+                overdue.isOverdue = !overdue.isOverdue;
+                await overdue.save();
+
+                return res.status(200).json({ message: `${overdue.isOverdue ? "Sistema bloqueado por atraso" : "Bloqueio por atraso desativado."}` });
+
+            }catch (error) {
+                console.error('Erro ao executar sistema de atrasados:', error);
+                return res.status(500).json({ message: "Erro ao executar sistema de atrasados." });
             }
         });
 
