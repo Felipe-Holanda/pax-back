@@ -37,19 +37,22 @@ class TicketServices {
 
         if(!ticket) throw new AppError("Ticket não encontrado.", 404);
 
-        if(cpf.includes('.')){
-            cpf = cpf.replace(/\./g, '');
-            cpf = cpf.replace(/\-/g, '');
-        }
+        // Normalizar CPF recebido - remover formatação
+        let cpfNormalized = cpf.replace(/\./g, '').replace(/\-/g, '');
 
-        if(ticket.document.includes('.')){
-            ticket.document = ticket.document.replace(/\./g, '');
-            ticket.document = ticket.document.replace(/\-/g, '');
-        }
+        // Normalizar CPF do ticket - remover formatação
+        let ticketDocNormalized = ticket.document.replace(/\./g, '').replace(/\-/g, '');
 
-        if(cpf !== ticket.document){
+        // Comparar os CPFs normalizados
+        if(cpfNormalized !== ticketDocNormalized){
             //Vamos verificar se o cpf é de um passageiro
-            const passenger = await Passenger.findOne({document: cpf});
+            // Precisamos buscar com ambas as versões (formatada e sem formatação)
+            const passenger = await Passenger.findOne({
+                $or: [
+                    { document: cpf },
+                    { document: cpfNormalized }
+                ]
+            });
 
             if(!passenger)  throw new AppError("CPF não confere com o ticket.", 401);
 

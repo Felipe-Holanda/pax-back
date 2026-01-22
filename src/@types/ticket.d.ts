@@ -3,9 +3,6 @@ export interface iTicketData{
     passenger: string;
     document: string;
     annotation: string;
-    ticket: string;
-    reserve: string;
-    destiny: string;
     price: string;
     includeBag: boolean;
     includeHand: boolean;

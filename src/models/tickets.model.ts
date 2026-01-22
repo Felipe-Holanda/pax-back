@@ -21,19 +21,7 @@ const ticketSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    ticket: {
-        type: String,
-        required: true
-    },
-    reserve: {
-        type: String,
-        required: true
-    },
     annotation: {
-        type: String,
-        required: true
-    },
-    destiny: {
         type: String,
         required: true
     },

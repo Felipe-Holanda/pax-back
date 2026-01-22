@@ -3,6 +3,7 @@ import LoginController from "../controllers/login.controller";
 import fieldValidator from "../middlewares/global/FieldValidator.middleware";
 import { loginSchema } from "../schemas/login.schemas";
 import LoginService from "../services/login.services";
+import collectIdMiddleware from "../middlewares/login/CollectId.middleware";
 
 class LoginRoutes {
     
@@ -18,6 +19,7 @@ class LoginRoutes {
         
         private init(): void {
             this.router.post("/", fieldValidator(loginSchema), this.loginController.login);
+            this.router.get("/me", collectIdMiddleware, this.loginController.getMe);
         }
     
 }
