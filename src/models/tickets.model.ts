@@ -27,7 +27,7 @@ const ticketSchema = new mongoose.Schema({
     },
     price: {
         type: String,
-        required: true
+        required: false
     },
     includeBag: {
         type: Boolean,

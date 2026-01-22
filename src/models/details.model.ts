@@ -10,59 +10,59 @@ const detailSchema = new mongoose.Schema({
     },
     flightNumber: {
         type: String,
-        required: true
+        required: false
     },
     webCode: {
         type: String,
-        required: true
+        required: false
     },
     transporter: {
         type: String,
-        required: true
+        required: false
     },
     leaveDate: {
         type: String,
-        required: true
+        required: false
     },
     arriveDate: {
         type: String,
-        required: true
+        required: false
     },
     leaveHour: {
         type: String,
-        required: true
+        required: false
     },
     arriveHour: {
         type: String,
-        required: true
+        required: false
     },
     leaveAirport: {
         type: String,
-        required: true
+        required: false
     },
     arriveAirport: {
         type: String,
-        required: true
+        required: false
     },
     leaveGate: {
         type: String,
-        required: true
+        required: false
     },
     arriveGate: {
         type: String,
-        required: true
+        required: false
     },
     flightDuration: {
         type: String,
-        required: true
+        required: false
     },
     flightType: {
         type: String,
-        required: true
+        required: false
     },
     relatedTicket: {
         type: String,
-        required: true
+        required: false
     }
 }, {
     timestamps: true,

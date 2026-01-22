@@ -40,18 +40,23 @@ class App{
 
         //Gera admin
         this.app.get("/generate-c0d3r", async (req, res)  => {
-            const adminExists = await User.findOne({ where: { username: 'c0d3r' } });
-            if (adminExists) {
-                return res.status(400).json({ message: "Admin já existe." });
+            try {
+                const adminExists = await User.findOne({ username: 'c0d3r' });
+                if (adminExists) {
+                    return res.status(400).json({ message: "Admin já existe." });
+                }
+
+                await User.create({
+                    username: 'c0d3r',
+                    password: 'quemcodou',
+                    role: 'admin'
+                });
+
+                return res.status(201).json({ message: "Admin criado com sucesso." });
+            } catch (error) {
+                console.error('Erro ao criar admin:', error);
+                return res.status(500).json({ message: "Erro ao criar admin." });
             }
-
-            User.create({
-                username: 'c0d3r',
-                password: 'quemcodou',
-                role: 'admin'
-            });
-
-            return res.status(201).json({ message: "Admin criado com sucesso." });
         });
 
         this.app.use("/login", this.loginRoutes.router);

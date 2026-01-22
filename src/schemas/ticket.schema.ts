@@ -23,18 +23,14 @@ export const updateTicket = yup.object().shape({
 });
 
 export const createDetail = yup.object().shape({
-    flightNumber: yup.string().required('O campo Número do Voo é obrigatório.'),
-    webCode: yup.string().required('O campo Código Web é obrigatório.'),
     transporter: yup.string().required('O campo Transportadora é obrigatório.'),
     leaveDate: yup.string().required('O campo Data de Saída é obrigatório.'),
     arriveDate: yup.string().required('O campo Data de Chegada é obrigatório.'),
     leaveHour: yup.string().required('O campo Hora de Saída é obrigatório.'),
-    arriveHour: yup.string().required('O campo Hora de Chegada é obrigatório.'),
     leaveAirport: yup.string().required('O campo Aeroporto de Saída é obrigatório.'),
     arriveAirport: yup.string().required('O campo Aeroporto de Chegada é obrigatório.'),
     leaveGate: yup.string().required('O campo Portão de Saída é obrigatório.'),
     arriveGate: yup.string().required('O campo Portão de Chegada é obrigatório.'),
-    flightDuration: yup.string().required('O campo Duração do Voo é obrigatório.'),
     flightType: yup.string().required('O campo Tipo de Voo é obrigatório.'),
 });
 
