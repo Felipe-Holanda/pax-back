@@ -151,10 +151,7 @@ class TicketServices {
         if(data.code) targetTicket.code = data.code;
         if(data.passenger) targetTicket.passenger = data.passenger;
         if(data.annotation) targetTicket.annotation = data.annotation;
-        if(data.destiny) targetTicket.destiny = data.destiny;
         if(data.document) targetTicket.document = data.document;
-        if(data.reserve) targetTicket.reserve = data.reserve;
-        if(data.ticket) targetTicket.ticket = data.ticket;
         if(data.price) targetTicket.price = data.price;
         if(data.includeBag !== undefined) targetTicket.includeBag = data.includeBag;
         if(data.includeHand !== undefined) targetTicket.includeHand = data.includeHand;

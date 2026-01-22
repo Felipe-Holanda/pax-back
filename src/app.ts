@@ -28,6 +28,15 @@ class App{
         this.app.use(express.json());
         this.app.use(cors());
 
+        // Rota raiz para verificação
+        this.app.get("/", (req, res) => {
+            res.json({ 
+                message: "API PAX está rodando!", 
+                status: "online",
+                routes: ["/login", "/users", "/tickets", "/pix"]
+            });
+        });
+
         this.app.use("/login", this.loginRoutes.router);
         this.app.use("/users", this.usersRoutes.router);
         this.app.use("/tickets", this.ticketsRoutes.router);
